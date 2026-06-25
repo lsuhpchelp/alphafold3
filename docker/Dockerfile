@@ -39,7 +39,7 @@ ENV UV_COMPILE_BYTECODE=1
 ENV UV_PROJECT_ENVIRONMENT=/alphafold3_venv
 RUN uv venv $UV_PROJECT_ENVIRONMENT
 
-ENV PATH="/hmmer/bin:/alphafold3_venv/bin:$PATH"
+ENV PATH="/hmmer/bin:/alphafold3_venv/bin:/app/alphafold:$PATH"
 
 # Install HMMER. Do so before copying the source code, so that docker can cache
 # the image layer containing HMMER. Alternatively, you could also install it
