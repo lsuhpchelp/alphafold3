@@ -1,0 +1,41 @@
+Bootstrap: docker-daemon
+From: jasonli3/alphafold3:3.0.3
+
+
+################################################################################
+%labels
+################################################################################
+
+Maintainer      Jason Li
+Version         3.0.3
+Description     AlphaFold 3 inference pipeline.
+
+
+################################################################################
+%environment
+################################################################################
+
+export PATH=$PATH:/app/alphafold
+
+
+################################################################################
+%post
+################################################################################
+
+# Create database folder
+mkdir /opt/afdata
+
+# Download mmcif database and put it in container for LSU/LONI HPC
+#   It contains 200k small files plain in one folder, not a good practice for storage
+cd /opt/afdata
+wget --quiet --output-document=- \
+    "https://storage.googleapis.com/alphafold-databases/v3.0/pdb_2022_09_28_mmcif_files.tar.zst" | \
+    tar --no-same-owner --no-same-permissions \
+    --use-compress-program=zstd -xf - --directory=/opt/afdata
+
+
+################################################################################
+%runscript
+################################################################################
+
+run_alphafold.sh "$@"

@@ -34,11 +34,13 @@ mkdir -p "${db_dir}"
 
 readonly SOURCE=https://storage.googleapis.com/alphafold-databases/v3.0
 
-echo "Start Fetching and Untarring 'pdb_2022_09_28_mmcif_files.tar'"
-wget --quiet --output-document=- \
-    "${SOURCE}/pdb_2022_09_28_mmcif_files.tar.zst" | \
-    tar --no-same-owner --no-same-permissions \
-    --use-compress-program=zstd -xf - --directory="${db_dir}" &
+# No longer download mmcif database. It is compiled in container for LSU/LONI HPC
+#   It contains 200k small files plain in one folder, not a good practice for storage
+#echo "Start Fetching and Untarring 'pdb_2022_09_28_mmcif_files.tar'"
+#wget --quiet --output-document=- \
+#    "${SOURCE}/pdb_2022_09_28_mmcif_files.tar.zst" | \
+#    tar --no-same-owner --no-same-permissions \
+#    --use-compress-program=zstd -xf - --directory="${db_dir}" &
 
 for NAME in mgy_clusters_2022_05.fa \
             bfd-first_non_consensus_sequences.fasta \
